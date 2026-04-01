@@ -111,5 +111,3 @@ For general architecture details, math, and the underlying bidirectional framewo
 
 We welcome contributions from the community to expand the capabilities of continuous-time deep learning.
 This project is licensed under the MIT License - see the [LICENSE](https://www.google.com/search?q=LICENSE) file for details.
-
-````
