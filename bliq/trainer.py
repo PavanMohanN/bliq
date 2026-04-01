@@ -50,6 +50,7 @@ def train_bliq(
         )
 
         loss.backward()
+        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
         optimizer.step()
 
         if verbose and (epoch % 100 == 0 or epoch == epochs - 1):

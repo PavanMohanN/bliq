@@ -103,3 +103,12 @@ def inverse_consistency_error(model, x_rec, y):
         error = torch.abs(y - y_pred)
 
     return error.mean().item(), error.max().item()
+
+def plot_liquid_constants(model):
+    tau = torch.nn.functional.softplus(model.ode_func.tau).detach().cpu().numpy()
+    plt.figure(figsize=(5, 4))
+    plt.hist(tau.flatten(), bins=30)
+    plt.title("Distribution of Liquid Time-Constants (tau)")
+    plt.xlabel("Value")
+    plt.ylabel("Frequency")
+    plt.show()

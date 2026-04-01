@@ -1,57 +1,53 @@
 import torch
 
-
 def bliq_loss(
     model,
     x,
     y,
     lambda_rec: float = 0.1,
-    lambda_inv: float = 0.1,
+    lambda_inv: float = 1.0,     # Default increased for better manifold mapping
     lambda_latent: float = 0.1,
     lambda_reg: float = 1e-4,
+    noise_level: float = 0.5    # Noise injected during training for diversity
 ):
     """
-    Computes BLiqNet dual-consistency loss.
+    Computes BLiqNet dual-consistency loss with stochastic inverse support.
 
     Components:
         1. Forward loss:        y ≈ f(x)
-        2. Reconstruction:      x ≈ g(y)
-        3. Inverse feasibility: y ≈ f(g(y))
+        2. Reconstruction:      x ≈ g(y) (Supervised)
+        3. Inverse feasibility: y ≈ f(g(y)) (Consistency - CRITICAL)
         4. Latent consistency:  h_f ≈ h_b
-
-    Args:
-        model: BLiqNet instance
-        x: input tensor (batch, input_dim)
-        y: output tensor (batch, output_dim)
-
-    Returns:
-        total_loss, dict of individual components
     """
 
-    # Forward pass
+    # 1. Forward pass (Standard)
     y_pred, h_f = model.forward_with_latent(x)
-
-    # Inverse pass
-    x_rec, h_b = model.inverse_with_latent(y)
-
-    # 1. Forward loss
     loss_f = torch.mean((y - y_pred) ** 2)
 
-    # 2. Reconstruction loss
+    # 2. Inverse pass (Stochastic)
+    # We inject small noise here so the ODE learns to map y to a valid 
+    # neighborhood of x, rather than a single rigid coordinate.
+    x_rec, h_b = model.inverse_with_latent(y, noise_level=noise_level)
+
+    # 3. Reconstruction loss
+    # How close is the reconstructed x to the original x?
     loss_rec = torch.mean((x - x_rec) ** 2)
 
-    # 3. Inverse feasibility
+    # 4. Inverse feasibility (Cycle Consistency)
+    # If we pass our reconstructed x back through the forward model, 
+    # do we get the original y? This is vital for many-to-one problems.
     y_from_xrec = model.forward(x_rec)
     loss_inv = torch.mean((y - y_from_xrec) ** 2)
 
-    # 4. Latent consistency
+    # 5. Latent consistency
+    # Ensures the latent dynamics (Liquid ODE) are synchronized 
+    # across both directions.
     loss_latent = torch.mean((h_f - h_b) ** 2)
 
-    # 5. Regularization
+    # 6. Weight Regularization (L2)
     loss_reg = 0.0
     for p in model.parameters():
         loss_reg += torch.sum(p ** 2)
-
     loss_reg = lambda_reg * loss_reg
 
     # Total loss
