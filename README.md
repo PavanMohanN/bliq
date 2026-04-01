@@ -2,7 +2,7 @@
 
 [![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
-[![DOI: Zenodo](https://img.shields.io/badge/DOI-10.5281/zenodo.xxxxxxx-blue.svg)](https://zenodo.org/badge/latestdoi/xxxxxxxx)
+<a href="https://doi.org/10.5281/zenodo.19377331"><img src="https://zenodo.org/badge/1198657555.svg" alt="DOI"></a>
 [![arXiv](https://img.shields.io/badge/arXiv-26XX.XXXXX-b31b1b.svg)](https://arxiv.org/abs/26XX.XXXXX)
 
 **The first continuous-time liquid neural network capable of bidirectional flow.**
