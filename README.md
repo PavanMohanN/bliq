@@ -105,6 +105,6 @@ If you use **BLiqNet** in your research, please cite the official implementation
 
 -----
 
-## 许可证 (License)
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](https://www.google.com/search?q=LICENSE) file for details.
