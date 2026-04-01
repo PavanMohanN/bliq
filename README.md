@@ -51,9 +51,14 @@ This ensures the system is truly "Liquid"—its internal update speed effectivel
 
 ## 📊 Visual Proof: Manifold Learning
 
-*Figure 1: BLiqNet successfully reconstructing a complex, non-linear manifold without mode collapse, demonstrating topological awareness.*
+<img width="2347" height="1696" alt="image" src="https://github.com/user-attachments/assets/37b7e7d3-9c16-4ca5-a6af-02f519934f44" />
+By injecting stochastic latent perturbations into its Liquid Time-Constant (LTC) ODE, it probabilistically explores the continuous time-space. It successfully learns and reconstructs every valid branch of the self-intersecting manifold.
 
-*Figure 2: The distribution of Liquid Time-Constants ($\tau$) within the network, proving the model dynamically adapts its internal "speed" to resolve multi-scale spatial features.*
+<img width="2397" height="1490" alt="image" src="https://github.com/user-attachments/assets/ead76970-61cf-45a7-9c36-2d8fc9f92420" />
+The baseline model's error permanently plateaus because it cannot resolve the intersections. BLiqNet's generative loss reliably converges toward zero.
+
+<img width="2057" height="1938" alt="image" src="https://github.com/user-attachments/assets/fade9ccf-1792-4a6c-8c3b-79473c7e3f99" />
+This heatmap displays the continuous-time synaptic conductances that allow BLiqNet to dynamically speed up, slow down, and switch directions at topological singularities.
 
 -----
 
