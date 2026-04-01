@@ -1,7 +1,3 @@
-This README is designed to serve as both a high-level technical landing page and a rigorous documentation framework for **BLiqNet**. It establishes your priority in the field by citing your **March 2026** publication in *Geodata and AI* while positioning the library for general-purpose application.
-
------
-
 # BLiqNet: Bidirectional Liquid Neural Networks
 
 [](https://pytorch.org/)
