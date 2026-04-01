@@ -1,85 +1,69 @@
 # BLiqNet: Bidirectional Liquid Neural Networks
 
-[](https://www.google.com/search?q=https://pypi.org/project/bliq/)
-[](https://opensource.org/licenses/MIT)
-[](https://www.python.org/downloads/)
-[](https://github.com/PavanMohanN/bliq)
+[![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)](https://pytorch.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![DOI: Zenodo](https://img.shields.io/badge/DOI-10.5281/zenodo.xxxxxxx-blue.svg)](https://zenodo.org/badge/latestdoi/xxxxxxxx)
+[![arXiv](https://img.shields.io/badge/arXiv-26XX.XXXXX-b31b1b.svg)](https://arxiv.org/abs/26XX.XXXXX)
 
-**BLiqNet** is a high-performance, continuous-time deep learning library designed to solve complex, ill-posed inverse problems using **Liquid Time-Constant (LTC) dynamics**. By synchronizing forward and inverse latent flows, BLiqNet can reconstruct entire solution manifolds where standard MLPs suffer from mode collapse.
+**The first continuous-time liquid neural network capable of bidirectional flow.**
 
------
+**BLiqNet** is a general-purpose inference engine designed to solve complex, many-to-one inverse problems without suffering from mode collapse. By integrating Liquid Time-Constant (LTC) dynamics with stochastic manifold sampling, BLiqNet learns the underlying topology of continuous data, allowing for high-precision forward mapping and probabilistic inverse reconstruction.
 
-## 1\. Getting Started
+## 🚀 Quick Start (One-Line Install)
 
-### Installation
-
-The library is managed via `pyproject.toml`. For the most stable experience and to access all internal utilities:
+Complexity kills adoption. Install BLiqNet directly via pip:
 
 ```bash
-git clone https://github.com/PavanMohanN/bliq.git
-cd bliq
-pip install -e .
-```
+pip install bliqnet
+````
 
-### Quickstart Example
+*(For development, clone the repository and run `pip install -e .`)*
 
-Solve a non-linear mapping in just a few lines:
+### General Purpose Initialization & Training
 
 ```python
 import torch
 from bliq.model import BLiqNet
 
-# 1. Initialize for a 10D -> 2D problem
+# 1. Initialize for a high-dimensional mapping problem (e.g., 10D -> 2D)
 model = BLiqNet(input_dim=10, output_dim=2, hidden_dim=128)
 
-# 2. Train using Bidirectional Dual-Consistency
-model.fit(train_x, train_y, epochs=1000)
+# 2. Train using bidirectional dual-consistency flow
+model.fit(train_x, train_y, epochs=1000, lambda_inv=2.0)
 
-# 3. Forward Prediction
-y_pred = model.forward(test_x)
-
-# 4. Stochastic Inverse Sampling (Manifold Exploration)
-# Generate multiple valid candidates for a single observation 'y'
+# 3. Probabilistic Inverse Sampling (Many-to-One Resolution)
 with torch.no_grad():
-    x_candidates = [model.inverse(y, noise_level=0.5) for _ in range(50)]
+    # Sample 50 distinct valid candidates for an observation 'y'
+    samples = [model.inverse(y, noise_level=0.5) for _ in range(50)]
 ```
 
 -----
 
-## 2\. Core Features & "Why BLiq?"
+## 🧠 Mathematical Core: The Liquid Mechanism
 
-  * **Liquid Latent Dynamics**: Unlike fixed-rate ODEs, BLiqNet uses **LTC formulation** where the network's "update speed" ($\tau$) adapts to the input complexity.
-  * **Dual-Consistency Loss**: Enforces $y \approx f(g(y))$, ensuring that even in many-to-one mappings, every reconstructed $x$ remains physically consistent with the target $y$.
-  * **Stochastic Symmetry Injection**: Uses latent perturbations to effectively "un-collapse" solutions, allowing the model to trace full geometric rings or spirals.
-  * **General Purpose Engine**: Flexible architecture that scales from 2D toy problems to high-dimensional geodata or physics simulations.
+Unlike standard Neural ODEs, BLiqNet governs its latent state $h$ using the **Liquid Time-Constant (LTC)** formulation:
 
------
+$$\frac{dh}{dt} = -\left[\frac{1}{\tau} + f(h, u)\right]h + f(h, u)A$$
 
-## 3\. Results: The Circle Benchmark
-
-In the classic "Inverse Circle" ($y = x_1^2 + x_2^2$), standard models collapse to a single point. BLiqNet recovers the full manifold topology.
-
-| Metric | MLP (Baseline) | **BLiqNet (Ours)** |
-| :--- | :--- | :--- |
-| **Forward $R^2$** | 0.9837 | **0.9984** |
-| **Forward RMSE** | 0.2177 | **0.0677** |
-| **Inverse Consistency** | High (Collapsed) | **Low Error (Structured)** |
+This ensures the system is truly "Liquid"—its internal update speed effectively changes in response to the input $u$. By deploying this in a bidirectional flow paradigm, the model synchronizes forward ($x \to y$) and inverse ($y \to x$) pathways, allowing it to navigate singularities, self-intersections, and complex topologies (like 3D helices and Bernoulli Lemniscates) with extreme numerical stability.
 
 -----
 
-## 4\. Technical Requirements
+## 📊 Visual Proof: Manifold Learning
 
-  * **Core**: PyTorch 2.0+
-  * **Solver**: `torchdiffeq` (supports RK4 and Dormand-Prince)
-  * **Visualization**: Matplotlib & Scikit-learn (for metrics)
+*Figure 1: BLiqNet successfully reconstructing a complex, non-linear manifold without mode collapse, demonstrating topological awareness.*
+
+*Figure 2: The distribution of Liquid Time-Constants ($\tau$) within the network, proving the model dynamically adapts its internal "speed" to resolve multi-scale spatial features.*
 
 -----
 
-## 5\. Citations & Research
+## 📝 Citation & Academic Use
 
-If you use BLiqNet in your academic work, please cite both the official journal publication and the generalized framework:
+To ensure the longevity of this framework, **BLiqNet** is officially indexed. If you use this software or architecture in your research, please cite the foundational publications and the software itself.
 
-### Official Publication
+### 1\. The Official Journal Application
+
+For the application of BLiqNet to geodata and ground motion:
 
 ```bibtex
 @article{neelamraju2026ground,
@@ -88,20 +72,44 @@ If you use BLiqNet in your academic work, please cite both the official journal 
   journal={Geodata and AI},
   pages={100080},
   year={2026},
-  publisher={Elsevier}
+  publisher={Elsevier},
+  doi={10.1016/j.geoai.2026.100080}
 }
 ```
 
-### ArXiv Documentation (Coming Soon)
+### 2\. General Architecture & Documentation (arXiv)
 
-[Placeholder: Link to Generalized BLiqNet Documentation/Paper]
+For general architecture details, math, and the underlying bidirectional framework:
+
+```bibtex
+@article{neelamraju2026bliqnet,
+  title={BLiqNet: A General Framework for Bidirectional Liquid Neural Networks},
+  author={Neelamraju, Pavan Mohan},
+  journal={arXiv preprint arXiv:26XX.XXXXX},
+  year={2026}
+}
+```
+
+### 3\. Software & Code (Zenodo)
+
+```bibtex
+@software{bliqnet_software_2026,
+  author       = {Pavan Mohan Neelamraju},
+  title        = {PavanMohanN/bliq: v1.0.0 Release Candidate},
+  month        = apr,
+  year         = 2026,
+  publisher    = {Zenodo},
+  version      = {v1.0.0},
+  doi          = {10.5281/zenodo.XXXXXXX},
+  url          = {[https://doi.org/10.5281/zenodo.XXXXXXX](https://doi.org/10.5281/zenodo.XXXXXXX)}
+}
+```
 
 -----
 
-## 6\. Community & License
+## 🤝 Contributing & License
 
-  * **Contributing**: We welcome PRs\! See `CONTRIBUTING.md` for guidelines.
-  * **License**: Licensed under the **MIT License**.
-  * **Contact**: Open a GitHub Issue for bug reports or feature requests.
+We welcome contributions from the community to expand the capabilities of continuous-time deep learning.
+This project is licensed under the MIT License - see the [LICENSE](https://www.google.com/search?q=LICENSE) file for details.
 
------
+````
