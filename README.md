@@ -13,7 +13,7 @@
   * **Liquid Time-Constant (LTC) Dynamics**: The latent state $dh/dt$ is governed by input-dependent conductance, allowing the network to adapt its update speed to data complexity.
   * **Bidirectional Dual-Consistency**: Synchronized forward ($x \to y$) and inverse ($y \to x$) pathways through a shared latent Liquid ODE.
   * **Stochastic Manifold Sampling**: Employs latent perturbations and symmetry injection to explore entire solution manifolds in ill-posed settings.
-  * **Physics-Consistent**: Prioritizes inverse feasibility ($y$ $\approx$ $f(g(y))$), ensuring reconstructed solutions obey the underlying laws of the data.
+  * **Physics-Consistent**: Prioritizes inverse feasibility ($y$ $\approx$ $$f(g(y))$$), ensuring reconstructed solutions obey the underlying laws of the data.
 
 -----
 
