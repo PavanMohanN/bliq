@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite both the software and the official journal article."
+authors:
+  - family-names: "Neelamraju"
+    given-names: "Pavan Mohan"
+title: "BLiqNet: Bidirectional Liquid Neural Networks"
+version: 1.0.0
+date-released: 2026-04-01
+url: "https://github.com/PavanMohanN/bliq"
+preferred-citation:
+  type: article
+  authors:
+  - family-names: "Neelamraju"
+    given-names: "Pavan Mohan"
+  - family-names: "Raghukanth"
+    given-names: "STG"
+  journal: "Geodata and AI"
+  title: "Ground Motion Modelling with Bidirectional Liquid Neural Network (BLiqNet)"
+  year: 2026
+  pages: "100080"
+  publisher: "Elsevier"
