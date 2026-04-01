@@ -4,17 +4,17 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "bliq"
-version = "0.1.0"
-description = "BLiqNet: Bidirectional Liquid Neural Networks for inverse problems"
-authors = [
-    { name="Pavan Mohan Neelamraju" }
-]
+version = "1.0.0"
+description = "BLiqNet: Bidirectional Liquid Neural Networks for General Inverse Problems"
+authors = [{ name="Pavan Mohan Neelamraju" }]
 readme = "README.md"
 requires-python = ">=3.8"
 dependencies = [
-    "torch",
+    "torch>=2.0.0",
+    "torchdiffeq>=0.2.3",
     "numpy",
-    "matplotlib"
+    "matplotlib",
+    "scikit-learn"
 ]
 
 [tool.setuptools.packages.find]
