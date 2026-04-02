@@ -95,20 +95,6 @@ For general architecture details, math, and the underlying bidirectional framewo
 }
 ```
 
-### 3\. Software & Code (Zenodo)
-
-```bibtex
-@software{bliqnet_software_2026,
-  author       = {Pavan Mohan Neelamraju},
-  title        = {PavanMohanN/bliq: v1.0.0 Release Candidate},
-  month        = apr,
-  year         = 2026,
-  publisher    = {Zenodo},
-  version      = {v1.0.0},
-  doi          = {10.5281/zenodo.XXXXXXX},
-  url          = {[https://doi.org/10.5281/zenodo.XXXXXXX](https://doi.org/10.5281/zenodo.XXXXXXX)}
-}
-```
 
 -----
 
